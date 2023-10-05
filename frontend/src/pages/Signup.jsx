@@ -11,7 +11,7 @@ const Signup = () => {
   const cidadeRef = useRef()
   const paisRef = useRef()
 
-  const getRefValues = () => {
+  const ffValues = () => {
     const nome = nomeRef.current?.value;
     const sobrenome = sobrenomeRef.current?.value;
     const idade = idadeRef.current?.value;
