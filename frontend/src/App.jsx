@@ -1,21 +1,26 @@
 import "./App.css";
-import { AuthProvider } from "./Context/AuthContext";
+import { AuthProvider, useAuth } from "./Context/AuthContext";
+import { useVerifyAuth } from "./hook/useVerifyAuth";
 import { Home } from "./pages/Home";
 import { Signin } from "./pages/Signin";
 import Signup from "./pages/Signup";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Global } from "./styles/globalstyle";
 
 const App = () => {
+
+  const {isAuth} = useVerifyAuth()
+
+
   return (
-    <AuthProvider>
       <Router>  
+        <Global />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={isAuth ? <Home /> : <Navigate to="/signin" />} />
+          <Route path="/signin" element={!isAuth ? <Signin /> : <Navigate to="/"/>} />
+          <Route path="/signup" element={!isAuth ? <Signup /> : <Navigate to="/"/>} />
         </Routes>
       </Router>
-    </AuthProvider>
   );
 };
 
